@@ -15,3 +15,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: false
+    open-in-view: false
+  logging:
+    level:
+      br.ultimate_restfull: DEBUG
