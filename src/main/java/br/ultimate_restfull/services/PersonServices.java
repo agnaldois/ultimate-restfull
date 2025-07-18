@@ -1,6 +1,9 @@
 package br.ultimate_restfull.services;
 
+import br.ultimate_restfull.data.dto.PersonDTO;
 import br.ultimate_restfull.exception.ResourceNotFoundException;
+import static br.ultimate_restfull.mapper.ObjectMapper.parseListObjects;
+import static br.ultimate_restfull.mapper.ObjectMapper.parseObject;
 import br.ultimate_restfull.model.Person;
 import br.ultimate_restfull.repository.PersonRepository;
 import org.slf4j.Logger;
@@ -20,26 +23,28 @@ public class PersonServices {
     @Autowired
     PersonRepository repository;
 
-    public List<Person> findAll() {
+    public List<PersonDTO> findAll() {
         logger.info("Finding all People!");
-
-        return repository.findAll();
+        var entityList = repository.findAll();
+        return parseListObjects(entityList, PersonDTO.class);
     }
 
-    public Person findById(Long id) {
+    public PersonDTO findById(Long id) {
         logger.info("Finding one Person!");
 
-        return repository.findById(id)
+        var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found, for this ID"));
+        return parseObject(entity, PersonDTO.class);
     }
 
-    public Person create(Person person) {
+    public PersonDTO create(PersonDTO person) {
         logger.info("Creating one Person!");
+        var entity = parseObject(person, Person.class);
 
-        return repository.save(person);
+        return parseObject(repository.save(entity), PersonDTO.class);
     }
 
-    public Person update(Person person) {
+    public PersonDTO update(PersonDTO person) {
         logger.info("Updating one Person!");
 
         Person entity = repository.findById(person.getId())
@@ -50,7 +55,7 @@ public class PersonServices {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return repository.save(entity);
+        return parseObject(repository.save(entity), PersonDTO.class);
     }
 
     public void delete(Long id) {
