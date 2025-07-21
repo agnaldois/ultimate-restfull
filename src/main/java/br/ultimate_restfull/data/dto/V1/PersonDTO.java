@@ -1,4 +1,4 @@
-package br.ultimate_restfull.data.dto;
+package br.ultimate_restfull.data.dto.V1;
 
 import java.io.Serializable;
 import java.util.Objects;
