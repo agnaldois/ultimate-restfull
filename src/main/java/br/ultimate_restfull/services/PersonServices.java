@@ -1,12 +1,10 @@
 package br.ultimate_restfull.services;
 
-import br.ultimate_restfull.data.dto.V1.PersonDTO;
-import br.ultimate_restfull.data.dto.V2.PersonDTOV2;
+import br.ultimate_restfull.data.dto.PersonDTO;
 import br.ultimate_restfull.exception.ResourceNotFoundException;
 import static br.ultimate_restfull.mapper.ObjectMapper.parseListObjects;
 import static br.ultimate_restfull.mapper.ObjectMapper.parseObject;
 
-import br.ultimate_restfull.mapper.custom.PersonMapper;
 import br.ultimate_restfull.model.Person;
 import br.ultimate_restfull.repository.PersonRepository;
 import org.slf4j.Logger;
@@ -25,9 +23,6 @@ public class PersonServices {
 
     @Autowired
     PersonRepository repository;
-
-    @Autowired
-    PersonMapper converter;
 
     public List<PersonDTO> findAll() {
         logger.info("Finding all People!");
@@ -48,13 +43,6 @@ public class PersonServices {
         var entity = parseObject(person, Person.class);
 
         return parseObject(repository.save(entity), PersonDTO.class);
-    }
-
-    public PersonDTOV2 createV2(PersonDTOV2 person) {
-        logger.info("Creating one Person V2!");
-        var entity = converter.convertDTOToEntity(person);
-
-        return converter.convertEntityToDTO(repository.save(entity));
     }
 
     public PersonDTO update(PersonDTO person) {
