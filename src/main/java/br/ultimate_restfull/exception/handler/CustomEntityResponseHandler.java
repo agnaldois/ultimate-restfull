@@ -1,6 +1,7 @@
 package br.ultimate_restfull.exception.handler;
 
 import br.ultimate_restfull.exception.ExceptionResponse;
+import br.ultimate_restfull.exception.RequiredObjectIsNullException;
 import br.ultimate_restfull.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,6 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
         ExceptionResponse response = new ExceptionResponse(
                 new Date(),
                 ex.getMessage()
-//                request.getDescription(false)
         );
         return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -31,8 +31,16 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
         ExceptionResponse response = new ExceptionResponse(
                 new Date(),
                 ex.getMessage()
-//                request.getDescription(false)
         );
         return new ResponseEntity(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RequiredObjectIsNullException.class)
+    public final ResponseEntity<ExceptionHandler> handleBadRequestExceptions(Exception ex, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+                new Date(),
+                ex.getMessage()
+        );
+        return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
     }
 }
