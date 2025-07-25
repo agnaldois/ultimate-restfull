@@ -35,9 +35,7 @@ public class PersonController {
             consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE },
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE }
     )
-    public PersonDTO create(@RequestBody PersonDTO person) {
-        return service.create(person);
-    }
+    public PersonDTO create(@RequestBody PersonDTO person) { return service.create(person); }
 
     @PutMapping(
             consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE },
